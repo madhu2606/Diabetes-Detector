@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <title>Login</title>
+  </head>
+  <style type="text/css">
+    a#admin-btn {
+      color: white;
+    }
+    h4.year2 {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 15px;
+      margin-top: 10px;
+      padding: 4px;
+    }
+    p.user-btn {
+      text-decoration: none;
+      text-align: right;
+    }
+  </style>
+  <body>
+    <body
+      style="
+        background: url(https://images.pexels.com/photos/1558732/pexels-photo-1558732.jpeg)
+          no-repeat center center;
+        background-size: cover cover;
+        height: 100vh;
+      "
+    >
+      <div class="overlay"></div>
+
+      <div class="container">
+        <div class="mt-2 mb-4">
+          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 ml-auto mr-auto">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <br />
+              <br />
+            </div>
+            <div class="col-sm-4"></div>
+
+            <ul
+              class="nav nav-pills nav-fill mb-1"
+              id="pills-tab"
+              role="tablist"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="pills-signin-tab"
+                  data-toggle="pill"
+                  href="#pills-signin"
+                  role="tab"
+                  aria-controls="pills-signin"
+                  aria-selected="true"
+                  >Sign In</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="pills-signup-tab"
+                  data-toggle="pill"
+                  href="#pills-signup"
+                  role="tab"
+                  aria-controls="pills-signup"
+                  aria-selected="false"
+                  >Sign Up</a
+                >
+              </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="pills-signin"
+                role="tabpanel"
+                aria-labelledby="pills-signin-tab"
+              >
+                <div
+                  class="col-sm-12 border border-primary shadow rounded bg-white pt-2"
+                >
+                  <h2 class="year2">Diabetes Predictor</h2>
+                  <div class="text-center text-danger"> {{msg}}</div>
+
+                  <em id="signInMsg"></em>
+
+                  <form name="f1" action="./authentication" method="POST">
+                   
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >User Name<span class="text-danger">*</span></label
+                      >
+
+                      <input
+                        type="text"
+                        id="user"
+                        required
+                        name="user"
+                        class="form-control form-control-lg"
+                        autocomplete="off"
+                        placeholder="Username"
+                        data-required
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >Password <span class="text-danger">*</span></label
+                      >
+
+                      <div class="input-group">
+                        <input
+                          type="password"
+                          required
+                          id="pass"
+                          name="pass"
+                          class="form-control form-control-lg"
+                          autocomplete="off"
+                          placeholder="Password"
+                          data-required
+                        />
+
+                        <div
+                          class="input-group-append"
+                          data-toggle="tooltip"
+                          data-placement="left"
+                        >
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-toggle="modal"
+                            data-target="#forgotPass"
+                          >
+                            <i class="fa fa-fw fa-key"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <button
+                        type="submit"
+                        name="signinSubmit"
+                        id="btn"
+                        value="Sign In"
+                        onclick="validation()"
+                        class="btn btn-block btn-primary"
+                      >
+                        <i class="fa fa-fw fa-sign-in-alt"></i> Sign In
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="pills-signup"
+                role="tabpanel"
+                aria-labelledby="pills-signup-tab"
+              >
+                <div
+                  class="col-sm-12 border border-primary shadow rounded bg-white pt-2"
+                >
+                  <h2 class="year2">Diabetes Predictor</h2>
+                  <div class="text-center text-danger">{{msg}}</div>
+
+                  <em id="signUpMsg"></em>
+
+                  <form method="post" id="singnupFrom" action="./insertUser">
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >Email <span class="text-danger">*</span></label
+                      >
+
+                      <input
+                        required
+                        type="email"
+                        name="signupemail"
+                        id="signupemail"
+                        class="form-control form-control-lg"
+                        placeholder="Enter valid email"
+                      />
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold"
+                          >Full Name <span class="text-danger">*</span></label
+                        >
+  
+                        <input
+                          required
+                          type="text"
+                          name="fullname"
+                          id="signupusername"
+                          class="form-control form-control-lg"
+                          placeholder="Full Name"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="font-weight-bold"
+                          >Full Name <span class="text-danger">*</span></label
+                        >
+  
+                        <input
+                          required
+                          type="number"
+                          name="mobile"
+                          id="signupusername"
+                          class="form-control form-control-lg"
+                          placeholder="Mobile"
+                        />
+                      </div>
+
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >User Name <span class="text-danger">*</span></label
+                      >
+
+                      <input
+                        required
+                        type="text"
+                        name="signupusername"
+                        id="signupusername"
+                        class="form-control form-control-lg"
+                        placeholder="Username"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="font-weight-bold"
+                        >Password <span class="text-danger">*</span></label
+                      >
+
+                      <input
+                        required
+                        type="password"
+                        name="signuppassword"
+                        id="signuppassword"
+                        class="form-control form-control-lg"
+                        placeholder="password"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <button
+                        type="submit"
+                        name="signupSubmit"
+                        id="signin"
+                        value="Sign Up"
+                        class="btn btn-block btn-primary"
+                      >
+                        <i class="fa fa-fw fa-sign-out-alt"></i> Sign Up
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/.col-xs-12 col-sm-8 col-md-6 col-lg-4-->
+        </div>
+        <!--/.mt-2 mb-4-->
+      </div>
+      <!--/.container-->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-5"></div>
+          <div class="col-sm-2" style="margin-left: 4%">
+            <button class="btn btn-primary">
+              <a href="./admin" id="admin-btn">Admin</a>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-5"></div>
+
+      <!-- Optional JavaScript -->
+
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+      <script
+        src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"
+      ></script>
+
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+      ></script>
+
+      <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+      ></script>
+    </body>
+  </body>
+</html>

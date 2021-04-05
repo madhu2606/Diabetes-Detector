@@ -1,0 +1,223 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Diabetes Predictor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous"
+  />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+        <style>
+            body{
+                background-color: aliceblue;
+            }
+            label {
+    font-size: 18px;
+    font-weight: 600;
+}
+.divhead{
+    background: #007bff;
+    color: white;
+    padding: 2;
+}
+        </style>
+</head>
+
+<body>
+    <div class="login">
+        <div class="divhead">
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diabetes Predictor
+                <i style="font-size: 20px;
+                padding-top: 1%;" onclick="window.location.replace('./logout')" class="fa  fa-power-off float-right signoff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> 
+            </h1>
+         
+           
+        </div>
+       
+        <div class='container '>
+           
+            <h1 class="text-center"> {{ result['msg']}}</h1>
+            <br>
+            <form action='./diagnosis' method="post">
+                <div class='row'>
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="name">Name</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="name" id="name" placeholder="name" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="gender">Gender</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="gender" placeholder="gender" id="gender"
+                                        required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="age">Age</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Age" placeholder="Age" id="age" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="bmi">BMI</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="BMI" placeholder="BMI" id="bmi" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="Pregnancies">Pregnancies</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Pregnancies" placeholder="Pregnancies" id="Pregnancies"
+                                        required="required" />
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class='col-sm-6'>
+                     <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="Glucose">Glucose</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Glucose" placeholder="Glucose" id="Glucose"
+                                        required="required" />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="BloodPressure">BloodPressure</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="BloodPressure" placeholder="BloodPressure"
+                                        id="BloodPressure" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="SkinThickness">SkinThickness</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="SkinThickness" placeholder="SkinThickness"
+                                        id="SkinThickness" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="Insulin">Insulin</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Insulin" placeholder="Insulin" id="Insulin"
+                                        required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="HeartRateVariability">HeartRateVariability</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" name="HeartRateVariability" id="HeartRateVariability"
+                                        placeholder="HeartRateVariability" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+               
+            </form>
+        </div>
+        <br>
+        <br>
+        <div class="container">
+            <h2>Previous Predictions</h2>
+            <!-- {{result['prev']}} -->
+            <table class="table table-striped">
+
+                <tr>
+                    <th>Id</th>
+                    <th>Age</th>
+                    <th>BMI</th>
+                    <th>Pregnancies</th>
+                    <th>Glucose</th>
+                    <th>BloodPressure</th>
+                    <th>SkinThickness</th>
+                    <th>Insulin</th>
+                    <th>HeartRateVariability</th>
+                    <th>Result</th>
+                </tr>
+                {% for t in result['prev'] %}
+                <tr>
+                    <td>{{t[0]}}</td>
+                    <td>{{t[3]}}</td>
+                    <td>{{t[9]}}</td>
+                    <td>{{t[4]}}</td>
+                    <td>{{t[5]}}</td>
+                    <td>{{t[6]}}</td>
+                    <td>{{t[7]}}</td>
+                    <td>{{t[8]}}</td>
+                    <td>{{t[10]}}</td>
+                    <td>{{t[12]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
