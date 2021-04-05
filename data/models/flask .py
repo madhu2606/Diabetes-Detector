@@ -2,8 +2,8 @@
 
 from flask import Flask, render_template,  request,redirect,url_for,session
 import pandas as pd
-# from tensorflow import keras
-# from keras.models import load_model
+from tensorflow import keras
+from keras.models import load_model
 import os
 import sqlite3
 
@@ -12,7 +12,7 @@ app.secret_key = "asdfghjkl"
 app.debug = True
 #initializing the model
 # MODEL_PATH = "data/model.pkl"
-# model = load_model("C:\\Users\\SVR SOLUTIONS\\Desktop\\Uday\\data\\Diabetes_prediction_project.h5")
+model = load_model("C:\\Users\\SVR SOLUTIONS\\Desktop\\Uday\\data\\Diabetes_prediction_project.h5")
 
 
 
@@ -44,6 +44,21 @@ def dashboard():
     else:
         msg = "Please Login"
         return redirect(url_for('index',msg=msg))
+    
+@app.route("/admindashboard")
+def admindashboard():
+    result = {}
+    if 'username' in session:
+        with sqlite3.connect("database.db") as con:
+            cur = con.cursor()
+            cur.execute("SELECT * from predictions")
+            records = cur.fetchall()
+            result['prev'] = records
+        return render_template("admin.html",result = result)
+    else:
+        msg = "Please Login"
+        return redirect(url_for('index',msg=msg))
+
 
 
 @app.route("/authentication",methods=['POST'])
@@ -64,6 +79,31 @@ def authentication():
             return redirect(url_for('index',msg=msg))
     return render_template("login.html")
  
+@app.route("/admin-auth",methods=['POST'])
+def adminauth():
+    user = request.form['user']
+    passw = request.form['pass']
+    if(user == 'admin' and passw =='admin'):
+        session['username'] = request.form['user']
+        return redirect(url_for('admindashboard'))
+    else:
+        msg = "Username or Password is incorrect"
+        return redirect(url_for('index',msg=msg))
+    # with sqlite3.connect("database.db") as con:
+    #     cur = con.cursor()
+    #     cur.execute("SELECT * from users where password = ? and username  = ?",(passw,user))
+    #     records = cur.fetchall()
+    #     if(len(records) > 0):
+    #         # print(records)
+    #         session['username'] = request.form['user']
+    #         session['mobile'] = records[0][4]
+    #         return redirect(url_for('dashboard'))
+    #     else:
+    #         msg = "Username or Password is incorrect"
+    #         return redirect(url_for('index',msg=msg))
+    return render_template("login.html")
+  
+
 @app.route("/insertUser",methods=['POST'])
 def insertUser():
     fullname = request.form['fullname']
@@ -106,28 +146,28 @@ def diagnosis():
     
     dict = {'Pregenancies': Pregnancies, 'Glucose': Glucose, 'BloodPressure': BloodPressure,'SkinThickness': SkinThickness,'Insulin': Insulin,'BMI': BMI,'Age':Age,'HeartRateVariability': HeartRateVariability}
     
-    # df = pd.DataFrame(dict,index=[0])
+    df = pd.DataFrame(dict,index=[0])
     
-    # df.to_csv('file1.csv')
+    df.to_csv('file1.csv')
     
-    # validation = pd.read_csv(".\\file1.csv")
+    validation = pd.read_csv(".\\file1.csv")
     
-    # validation = validation.drop("Unnamed: 0", axis = 1)
+    validation = validation.drop("Unnamed: 0", axis = 1)
     
     
     
     result={}
-    # prediction = [round(i[0]) for i in model.predict(validation)]
+    prediction = [round(i[0]) for i in model.predict(validation)]
     
     # #print(prediction[0] == 0)
     # #result=''
     # #Route for result
-    # if prediction[0] == 1:
-    #     result['msg']="please consult doctor as you haved diabetes"
-    # elif prediction[0] == 0:
-    #     result['msg']="Congrats! You dont have diabetes."
+    if prediction[0] == 1:
+        result['msg']="please consult doctor as you haved diabetes"
+    elif prediction[0] == 0:
+        result['msg']="Congrats! You dont have diabetes."
     print(session['mobile'])
-    result['msg'] = "Congrats! You dont have diabetes."
+    # result['msg'] = "Congrats! You dont have diabetes."
     with sqlite3.connect("database.db") as con:
         cur = con.cursor()
         cur.execute("INSERT INTO predictions (name, gender, Age,Pregnancies, Glucose,BloodPressure,SkinThickness,Insulin,BMI,HeartRateVariability,mobile,result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",(name,gender,Age,Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,HeartRateVariability,session['mobile'],result['msg']) )
